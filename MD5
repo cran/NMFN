@@ -1,0 +1,10 @@
+b7e6f934eaf40d9028ecadcb9376466a *DESCRIPTION
+9fdfeb11f7ddba6f3aab9aaa6b1ac5dd *NAMESPACE
+b6c9d490445d8863b89c2733d44b03ee *R/NMFN_three_methods.R
+02be3ee8e884e9fb2cf987240b1e5c92 *man/NMFN-package.Rd
+ac7c47531688e6ea5adeb91457b53bcb *man/distance2.Rd
+1ca9976d9f71a98f096223c8fe8138a9 *man/mpinv.Rd
+f0b51eb08f066910fe99904ec9e5e3c9 *man/nnmf.Rd
+3f6fe587903b3eeb7c9716d923986485 *man/nnmf_als.Rd
+9bd703230a814df4069151bc48f750d0 *man/nnmf_mm.Rd
+899ff213428ccea046e9b2105629020d *man/nnmf_prob.Rd

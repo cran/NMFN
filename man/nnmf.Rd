@@ -33,22 +33,11 @@ Suhai (TImothy) Liu
 }
 
 \examples{
+ 
+X <- matrix(1:12,3,4) 
+z.mm   <- nnmf(X,3)             # 3 factors via multiplicative update
+z.als  <- nnmf(X,3,'nnmf_als')  # 3 factors via alternating least square
+z.prob <- nnmf(X,3,'nnmf_prob') # 3 factors via multinomial
 
-
-## The function is currently defined as
-function (x, k, method = "nnmf_mm", maxiter = 1000, eps = 2.2204e-16) 
-{
-    if (method == "nnmf_als") {
-        cat("Alternating Least Squares Algorithm", "\n")
-        nnmf_als(x, k, maxiter, eps)
-    }
-    else {
-        cat("Multiplicative Update Algorithm", "\n")
-        nnmf_mm(x, k, maxiter, eps)
-    }
-  }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ matrix }
-\keyword{factorization}% __ONLY ONE__ keyword per line
+ 

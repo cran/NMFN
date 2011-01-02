@@ -19,23 +19,15 @@ Matrix 1
 Matrix 2
 }
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
+ 
 \author{
 Suhai (Timothy) Liu
 }
 
 
 \examples{
+X<-matrix(1:12,3,4)
+Y<-matrix(5:16,3,4)
+distance2(X,Y)
 
-## The function is currently defined as
-function (x1, x2) 
-{
-    temp <- x1 - x2
-    sum(temp * temp)
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{distance } 
+} 

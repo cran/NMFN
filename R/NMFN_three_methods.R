@@ -2,53 +2,38 @@
 
 mpinv <- function(X)                                                                                                                          
 {                                                                                                                                             
-                                                                                                                                              
-                                                                                                                                              
-    Eps <- 100 * .Machine$double.eps;                                                                                                         
+    Eps <- 100 * .Machine$double.eps                                                                                                       
                                                                                                                                               
     # singular value decomposition                                                                                                            
                                                                                                                                               
-                                                                                                                                              
-    s <- svd(X);                                                                                                                              
-    d <- s$d;                                                                                                                                 
-    m <- length(d);                                                                                                                           
-                                                                                                                                              
+    s <- svd(X)                                                                                                                              
+    d <- s$d                                                                                                                                 
+    m <- length(d)
                                                                                                                                               
     if (!(is.vector(d)))                                                                                                                      
-        return(t(s$v%*%(1/d)%*%t(s$u)));                                                                                                      
+        return(t(s$v%*%(1/d)%*%t(s$u)))                                                                                                       
                                                                                                                                               
-                                                                                                                                              
-                                                                                                                                              
-                                                                                                                                              
-    d <- d[d > Eps];                                                                                                                          
-    notnull <- length(d);                                                                                                                     
-                                                                                                                                              
+    d <- d[d > Eps]                                                                                                                          
+    notnull <- length(d)                                                                                                                      
                                                                                                                                               
     if (notnull == 1)                                                                                                                         
     {                                                                                                                                         
-        inv <- 1/d;                                                                                                                           
-    } else {                                                                                                                                  
-        inv <- solve(diag(d));                                                                                                                
-    }                                                                                                                                         
-                                                                                                                                              
-                                                                                                                                                                                                                                              
-                                                                                                                                              
+        inv <- 1/d                                                                                                                           
+     } else {                                                                                                                                  
+        inv <- solve(diag(d))                                                                                                                
+     }                                                                                                                                         
                                                                                                                                               
     if (notnull != m)                                                                                                                         
     {                                                                                                                                         
-        inv <- cbind(inv, matrix(0, nrow=notnull, ncol=(m - notnull)));                                                                       
-        inv <- rbind(inv, matrix(0, nrow=(m-notnull), ncol=m));                                                                               
+        inv <- cbind(inv, matrix(0, nrow=notnull, ncol=(m - notnull)))                                                                       
+        inv <- rbind(inv, matrix(0, nrow=(m-notnull), ncol=m))                                                                               
     }                                                                                                                                         
                                                                                                                                               
+    mp <- s$v%*%inv%*%t(s$u)                                                                                                                  
                                                                                                                                               
-                                                                                                                                              
-    mp <- s$v%*%inv%*%t(s$u);                                                                                                                 
-                                                                                                                                              
-                                                                                                                                              
-                                                                                                                                              
-    mp[abs(mp) < Eps] <- 0;                                                                                                                   
-    return(mp);                                                                                                                               
-};                                                                                                                                            
+    mp[abs(mp) < Eps] <- 0                                                                                                                   
+    return(mp)                                                                                                                               
+}                                                                                                                                            
                                                                                                                                               
                                                                                                                                               
                                                                                                                                               
@@ -146,8 +131,6 @@ nnmf_als <-function(x, k, maxiter, eps)
                                                                                                                                               
      z                                                                                                                                        
                                                                                                                                               
-                                                                                                                                              
-                                                                                                                                              
 }                                                                                                                                             
                       
 
@@ -217,14 +200,117 @@ nnmf_mm <-function(x, k, maxiter, eps)
 
        }                                                                                                                                
                                                                                                                                         
-     z <-c (list(W = W,H = H))          
-                                                                                               
+     z <-c (list(W = W,H = H))                                                                 
      z                                                                                                                                  
-                                                                                                                                        
-                                                                                                                                    
-                                                                                                                                        
 }
 
+
+
+
+
+
+ 
+
+                                                                                                                     
+                                                                                                                                              
+                                                                                                                                              
+ 
+
+                                                                                                                                         
+                                                                                                                                         
+nnmf_prob <- function(x, k, maxiter, eps = 100*.Machine$double.eps)                                                                      
+{                                                                                                                                        
+                                                                                                                                         
+  print_iter=50;                                                                                                                         
+  powers=1.5+(2.5-1.5)*((1:maxiter)-1)/(maxiter-1);                                                                                      
+                                                                                                                                         
+  D=dim(x)[1L];                                                                                                                          
+  N=dim(x)[2L];                                                                                                                          
+                                                                                                                                         
+  X_factor = sum(x);                                                                                                                     
+  X_org = x;                                                                                                                             
+  x=x/X_factor;                                                                                                                          
+                                                                                                                                         
+  W<-matrix(abs(rnorm(D*k)), D,k)                                                                                                        
+                                                                                                                                         
+  W = W / t(matrix(rep(colSums(W),D), ncol(W),nrow(W)))                                                                                  
+                                                                                                                                         
+  H<-matrix(abs(rnorm(k*N)),k,N)                                                                                                         
+                                                                                                                                         
+  H= H / (matrix(rep(rowSums(H),N), nrow(H),ncol(H)))                                                                                    
+                                                                                                                                         
+                                                                                                                                         
+  P=matrix(rep(1),k,1)                                                                                                                   
+                                                                                                                                         
+  P=P/sum(P)                                                                                                                             
+                                                                                                                                         
+  W1=W                                                                                                                                   
+  H1=H                                                                                                                                   
+                                                                                                                                         
+                                                                                                                                         
+                                                                                                                                         
+  Xr_old = W%*%H                                                                                                                         
+  for (iter in 1:maxiter) {                                                                                                              
+                                                                                                                                         
+    Qnorm = (W %*% diag(diag(P),k,k)) %*%H                                                                                               
+                                                                                                                                         
+    for (j in 1:k) {                                                                                                                     
+      Q<- ( t(t(W[,j])) %*% H[j,] * P[j] ) / (Qnorm + eps)                                                                               
+      XQ = x * Q                                                                                                                         
+                                                                                                                                         
+                                                                                                                                         
+      dummy =  rowSums(XQ)                                                                                                               
+      W1[,j]=t(dummy / sum(dummy))                                                                                                       
+                                                                                                                                         
+      dummy = colSums(XQ)                                                                                                                
+      H1[j,]=(dummy / sum(dummy))                                                                                                        
+                                                                                                                                         
+    }                                                                                                                                    
+    W=W1                                                                                                                                 
+    H=H1                                                                                                                                 
+                                                                                                                                         
+    if (iter%% print_iter ==0) {                                                                                                         
+                                                                                                                                         
+           Xr = W %*% H                                                                                                                  
+                                                                                                                                         
+           diff = sum(abs(Xr_old-Xr))                                                                                                    
+                                                                                                                                         
+           Xr_old = Xr                                                                                                                   
+                                                                                                                                         
+           eucl_dist = distance2(x, W %*% H)                                                                                             
+                                                                                                                                         
+           errorx = mean(abs(x - W %*% H)) / mean(x)                                                                                     
+                                                                                                                                         
+           cat('Iter = ', iter , "\t")                                                                                                   
+                                                                                                                                         
+           cat('relative error = ', errorx, "\t")                                                                                        
+                                                                                                                                         
+           cat('diff = ', diff, "\t")                                                                                                    
+                                                                                                                                         
+           cat('eucl dist = ', eucl_dist, "\n")                                                                                          
+                                                                                                                                         
+           if (errorx < 10e-6) {                                                                                                           
+                                                                                                                                         
+                  cat("Execution finishes at iteration = ", iter, "\n")                                                                  
+                                                                                                                                         
+                  break                                                                                                                  
+                                                                                                                                         
+            }                                                                                                                            
+                                                                                                                                         
+       }                                                                                                                                 
+                                                                                                                                         
+  }                                                                                                                                      
+                                                                                                                                         
+W =  W%*%diag(diag(sqrt(P)),k,k) *X_factor                                                                                               
+H = diag(diag(sqrt(P)),k,k) %*%H                                                                                                         
+                                                                                                                                         
+z<- c(list(W=W, H=H))                                                                                                                    
+                                                                                                                                         
+z                                                                                                                                        
+                                                                                                                                         
+}                                                                                                                                        
+                                                                                                                                         
+                  
 
 
                                                                                                                         
@@ -238,10 +324,17 @@ nnmf <- function(x, k, method = 'nnmf_mm', maxiter = 1000, eps=2.2204e-016)
 
       }         
 
+      else if (method == 'nnmf_prob') {
+            cat('Multinomial Algorithm', '\n')
+            nnmf_prob(x, k, maxiter, eps)
+            
+
+      }         
+
+
       else {
            cat('Multiplicative Update Algorithm', '\n')
            nnmf_mm(x, k, maxiter, eps)
       }
 
 }
-

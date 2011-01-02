@@ -1,14 +1,14 @@
-\name{nnmf_mm}
-\alias{nnmf_mm}
+\name{nnmf_prob}
+\alias{nnmf_prob}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Non-negative Matrix Factorization via multiplicative update 
+Non-negative Matrix Factorization via multinomial 
 }
 \description{
-Non-negative Matrix Factorization - multiplicative update method
+Non-negative Matrix Factorization - multinomial method
 }
 \usage{
-nnmf_mm(x, k, maxiter, eps)
+nnmf_prob(x, k, maxiter, eps)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,10 +27,7 @@ small threshold value
 } 
 \value{
 W, H - returned decomposed matrices
-}
-\references{
-Lee and Sung 2001
-}
+} 
 \author{
 Suhai (Timothy) Liu
 } 
@@ -38,8 +35,5 @@ Suhai (Timothy) Liu
 
 \examples{ 
 X <- matrix(1:12, 3, 4)
-
-results <- nnmf(X, 2)
-#which is equivalent to
-results <- nnmf(X, 2, 'nnmf_mm')
+results <- nnmf(X, 5, 'nnmf_prob')
 } 
