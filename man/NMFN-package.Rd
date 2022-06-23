@@ -25,7 +25,10 @@ LazyLoad: \tab yes\cr
 \references{
 Lee and Seung - Algorithms for non-negative matrix factorization. In Advances in Neural Information Processing Systems 13, 2001.
 }
-\keyword{non-negative matrix factorization, multiplicative update, alternating least squares, multinomial}
+\concept{non-negative matrix factorization}
+\concept{multiplicative update}
+\concept{alternating least squares}
+\concept{multinomial}
 \examples{
 
 X <- matrix(1:12,3,4) 
